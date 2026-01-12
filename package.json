@@ -1,6 +1,6 @@
 {
   "name": "hourtrackingapp",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "script.js",
   "scripts": {
@@ -9,6 +9,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+   "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ],
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
     "@vercel/postgres": "^0.10.0"
