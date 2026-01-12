@@ -1,6 +1,6 @@
-import { sql } from '@vercel/postgres';
+const { sql } = require('@vercel/postgres');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     // Enable CORS
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -29,16 +29,11 @@ export default async function handler(req, res) {
 }
 
 async function getHours(req, res) {
-  const { rows } = await sql`
-    SELECT
-      id,
-      date::text AS date,
-      hours,
-      created_at
-    FROM hours
-    ORDER BY date DESC, created_at DESC
-  `;
-  return res.status(200).json(rows);
+    const { rows } = await sql`
+        SELECT * FROM hours 
+        ORDER BY date DESC, created_at DESC
+    `;
+    return res.status(200).json(rows);
 }
 
 async function addHours(req, res) {
