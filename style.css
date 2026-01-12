@@ -76,7 +76,7 @@ header p {
 }
 
 .summary-value {
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: 700;
 }
 
@@ -99,16 +99,23 @@ header p {
     text-align: center;
     border: 2px solid transparent;
     transition: all 0.2s;
+    cursor: pointer;
 }
 
 .day-card:hover {
     background-color: #F3F4F6;
     border-color: #E5E7EB;
+    transform: translateY(-2px);
 }
 
 .day-card.has-hours {
     background-color: #EEF2FF;
     border-color: #C7D2FE;
+}
+
+.day-card.has-hours:hover {
+    background-color: #E0E7FF;
+    border-color: #A5B4FC;
 }
 
 .day-name {

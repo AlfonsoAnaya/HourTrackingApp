@@ -1,3 +1,5 @@
+let entries = [];
+
 // Helper function to parse date strings correctly (avoid timezone issues)
 function parseLocalDate(dateString) {
     // dateString is in format "YYYY-MM-DD"
@@ -18,13 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set today's date as default
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('date').value = today;
-    
+
     // Event listeners
     document.getElementById('addBtn').addEventListener('click', addEntry);
     document.getElementById('hours').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') addEntry();
     });
-    
+
     // Load entries
     fetchEntries();
 });
@@ -38,25 +40,26 @@ async function fetchEntries() {
             console.error('API Error:', errorData);
             throw new Error('Failed to fetch entries');
         }
-        
+
         const data = await response.json();
-        
-        // Ensure we have an array
+
         if (Array.isArray(data)) {
-            entries = data;
+            entries = data.map(entry => ({
+                ...entry,
+                hours: Number(entry.hours)
+            }));
         } else {
             console.error('Invalid data format:', data);
             entries = [];
         }
-        console.log(entries)
-        
+
         renderEntries();
         updateSummary();
         updateWeeklyDays();
     } catch (error) {
         console.error('Error fetching entries:', error);
         entries = []; // Reset to empty array on error
-        document.getElementById('entriesList').innerHTML = 
+        document.getElementById('entriesList').innerHTML =
             '<div class="empty-state">Error loading entries. Please refresh the page.</div>';
         updateSummary(); // Still update with empty data
         updateWeeklyDays();
@@ -67,24 +70,24 @@ async function fetchEntries() {
 async function addEntry() {
     const dateInput = document.getElementById('date');
     const hoursInput = document.getElementById('hours');
-    
+
     const date = dateInput.value;
     const hours = parseFloat(hoursInput.value);
-    
+
     if (!date || !hours || hours <= 0) {
         alert('Please enter a valid date and hours');
         return;
     }
-    
+
     try {
         const response = await fetch('/api/hours', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ date, hours })
         });
-        
+
         if (!response.ok) throw new Error('Failed to add entry');
-        
+
         // Clear input and refresh
         hoursInput.value = '';
         await fetchEntries();
@@ -97,16 +100,16 @@ async function addEntry() {
 // Delete entry
 async function deleteEntry(id) {
     if (!confirm('Delete this entry?')) return;
-    
+
     try {
         const response = await fetch('/api/hours', {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id })
         });
-        
+
         if (!response.ok) throw new Error('Failed to delete entry');
-        
+
         await fetchEntries();
     } catch (error) {
         console.error('Error deleting entry:', error);
@@ -114,52 +117,62 @@ async function deleteEntry(id) {
     }
 }
 
-// Update hourly rate
+// Update weekly days display
 function updateWeeklyDays() {
     const today = new Date();
     const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
-    
+
     // Calculate Monday of current week
     const monday = new Date(today);
     const diff = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // If Sunday, go back 6 days
     monday.setDate(today.getDate() + diff);
-    
+
     const days = ['mon', 'tue', 'wed', 'thu', 'fri'];
-    
+
     days.forEach((day, index) => {
         const currentDay = new Date(monday);
         currentDay.setDate(monday.getDate() + index);
-        
+
         const dateStr = formatDateString(currentDay);
         const dayNum = currentDay.getDate();
-        
-        // Find hours for this day
-        const dayEntry = entries.find(entry => entry.date === dateStr);
-        const hours = dayEntry ? dayEntry.hours : 0;
-        
+
+        // Find hours for this day (sum multiple entries if they exist)
+        const hours = entries
+            .filter(entry => entry.date === dateStr)
+            .reduce((sum, entry) => sum + entry.hours, 0);
+
         // Update DOM
         const dayCard = document.getElementById(`day-${day}`);
         dayCard.querySelector('.day-date').textContent = dayNum;
         dayCard.querySelector('.day-hours').textContent = hours > 0 ? `${hours}h` : '0h';
-        
+
         // Add visual indicator if has hours
         if (hours > 0) {
             dayCard.classList.add('has-hours');
         } else {
             dayCard.classList.remove('has-hours');
         }
+        
+        // Add click handler to select this date in the form
+        dayCard.onclick = () => selectDate(dateStr);
     });
+}
+
+// Select date in the form and focus hours input
+function selectDate(dateStr) {
+    document.getElementById('date').value = dateStr;
+    document.getElementById('hours').focus();
 }
 
 // Render entries list
 function renderEntries() {
     const container = document.getElementById('entriesList');
-    
+
     if (entries.length === 0) {
         container.innerHTML = '<div class="empty-state">No entries yet. Add your first babysitting session above!</div>';
         return;
     }
-    
+
     container.innerHTML = entries.map(entry => `
         <div class="entry-item">
             <div class="entry-info">
@@ -179,34 +192,30 @@ function renderEntries() {
 // Update summary cards
 function updateSummary() {
     const weeklyHours = getWeeklyHours() || 0;
-    
     document.getElementById('weeklyHours').textContent = `${weeklyHours}h`;
-
 }
 
-// Calculate weekly hours (last 7 days)
+// Calculate weekly hours (Mon-Fri of current week)
 function getWeeklyHours() {
     const today = new Date();
     const dayOfWeek = today.getDay();
-    
+
     // Calculate Monday of current week
     const monday = new Date(today);
     const diff = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
     monday.setDate(today.getDate() + diff);
-    
+
     // Calculate Friday of current week
     const friday = new Date(monday);
     friday.setDate(monday.getDate() + 4);
-    
+
     const mondayStr = formatDateString(monday);
     const fridayStr = formatDateString(friday);
-    
+
     return entries
         .filter(entry => entry.date >= mondayStr && entry.date <= fridayStr)
         .reduce((sum, entry) => sum + entry.hours, 0);
 }
-
-
 
 // Format date for display
 function formatDate(dateString) {
