@@ -35,10 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
 async function fetchEntries() {
     try {
         const response = await fetch('/api/hours');
+        
         if (!response.ok) {
-            const errorData = await response.json();
-            console.error('API Error:', errorData);
-            throw new Error('Failed to fetch entries');
+            const text = await response.text();
+            console.error('API Error Response:', text);
+            throw new Error(`Failed to fetch entries: ${response.status}`);
         }
 
         const data = await response.json();
@@ -60,7 +61,7 @@ async function fetchEntries() {
         console.error('Error fetching entries:', error);
         entries = []; // Reset to empty array on error
         document.getElementById('entriesList').innerHTML =
-            '<div class="empty-state">Error loading entries. Please refresh the page.</div>';
+            '<div class="empty-state">Unable to load entries. Check console for details.</div>';
         updateSummary(); // Still update with empty data
         updateWeeklyDays();
     }
