@@ -9,17 +9,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-   "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
-  ],
   "dependencies": {
-    "@neondatabase/serverless": "^1.0.2",
     "@vercel/postgres": "^0.10.0"
   }
 }
