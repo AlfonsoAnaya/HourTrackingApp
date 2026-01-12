@@ -48,10 +48,10 @@ header p {
     height: 20px;
 }
 
-/* Summary Cards */
+/* Summary Card */
 .summary-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: 1fr;
     gap: 1rem;
     margin-bottom: 2rem;
 }
@@ -65,14 +65,6 @@ header p {
     background-color: #EEF2FF;
 }
 
-.summary-card.green {
-    background-color: #F0FDF4;
-}
-
-.summary-card.purple {
-    background-color: #FAF5FF;
-}
-
 .summary-label {
     font-size: 0.875rem;
     font-weight: 500;
@@ -81,14 +73,6 @@ header p {
 
 .indigo .summary-label {
     color: #4F46E5;
-}
-
-.green .summary-label {
-    color: #16A34A;
-}
-
-.purple .summary-label {
-    color: #9333EA;
 }
 
 .summary-value {
@@ -100,30 +84,53 @@ header p {
     color: #312E81;
 }
 
-.green .summary-value {
-    color: #14532D;
+/* Weekly Days Grid */
+.weekly-days-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 2rem;
 }
 
-.purple .summary-value {
-    color: #581C87;
-}
-
-/* Rate Section */
-.rate-section {
+.day-card {
     background-color: #F9FAFB;
     border-radius: 0.75rem;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+    text-align: center;
+    border: 2px solid transparent;
+    transition: all 0.2s;
 }
 
-.rate-section label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
+.day-card:hover {
+    background-color: #F3F4F6;
+    border-color: #E5E7EB;
+}
+
+.day-card.has-hours {
+    background-color: #EEF2FF;
+    border-color: #C7D2FE;
+}
+
+.day-name {
+    font-size: 0.75rem;
     font-weight: 500;
-    color: #374151;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+}
+
+.day-date {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1F2937;
     margin-bottom: 0.5rem;
+}
+
+.day-hours {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4F46E5;
 }
 
 /* Form Section */
@@ -264,6 +271,10 @@ input[type="number"]:focus {
 
 /* Responsive */
 @media (max-width: 768px) {
+    .weekly-days-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
     .form-grid {
         grid-template-columns: 1fr;
     }
@@ -283,6 +294,10 @@ input[type="number"]:focus {
 }
 
 @media (max-width: 640px) {
+    .weekly-days-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
     .card {
         padding: 1.5rem;
     }

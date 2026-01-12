@@ -20,32 +20,41 @@
                 <p>Track babysitting hours and calculate weekly pay</p>
             </header>
 
-            <!-- Summary Cards -->
+            <!-- Summary Card -->
             <div class="summary-grid">
                 <div class="summary-card indigo">
                     <div class="summary-label">This Week</div>
                     <div class="summary-value" id="weeklyHours">0h</div>
                 </div>
-                <div class="summary-card green">
-                    <div class="summary-label">Weekly Pay</div>
-                    <div class="summary-value" id="weeklyPay">$0</div>
-                </div>
-                <div class="summary-card purple">
-                    <div class="summary-label">Total Hours</div>
-                    <div class="summary-value" id="totalHours">0h</div>
-                </div>
             </div>
 
-            <!-- Hourly Rate -->
-            <div class="rate-section">
-                <label for="hourlyRate">
-                    <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="12" y1="1" x2="12" y2="23"></line>
-                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                    </svg>
-                    Hourly Rate
-                </label>
-                <input type="number" id="hourlyRate" value="15" step="0.5" min="0">
+            <!-- Weekly Days Grid -->
+            <div class="weekly-days-grid">
+                <div class="day-card" id="day-mon">
+                    <div class="day-name">Mon</div>
+                    <div class="day-date">--</div>
+                    <div class="day-hours">0h</div>
+                </div>
+                <div class="day-card" id="day-tue">
+                    <div class="day-name">Tue</div>
+                    <div class="day-date">--</div>
+                    <div class="day-hours">0h</div>
+                </div>
+                <div class="day-card" id="day-wed">
+                    <div class="day-name">Wed</div>
+                    <div class="day-date">--</div>
+                    <div class="day-hours">0h</div>
+                </div>
+                <div class="day-card" id="day-thu">
+                    <div class="day-name">Thu</div>
+                    <div class="day-date">--</div>
+                    <div class="day-hours">0h</div>
+                </div>
+                <div class="day-card" id="day-fri">
+                    <div class="day-name">Fri</div>
+                    <div class="day-date">--</div>
+                    <div class="day-hours">0h</div>
+                </div>
             </div>
 
             <!-- Add Entry Form -->
