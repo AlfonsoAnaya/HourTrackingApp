@@ -61,7 +61,7 @@ async function fetchEntries() {
         console.error('Error fetching entries:', error);
         entries = []; // Reset to empty array on error
         document.getElementById('entriesList').innerHTML =
-            '<div class="empty-state">Unable to load entries. Check console for details.</div>';
+            '<div class="empty-state">No se pueden cargar las entradas. Consulta la consola para más detalles.</div>';
         updateSummary(); // Still update with empty data
         updateWeeklyDays();
     }
@@ -76,7 +76,7 @@ async function addEntry() {
     const hours = parseFloat(hoursInput.value);
 
     if (!date || !hours || hours <= 0) {
-        alert('Please enter a valid date and hours');
+        alert('Por favor, introduce una fecha y horas válidas');
         return;
     }
 
@@ -94,13 +94,13 @@ async function addEntry() {
         await fetchEntries();
     } catch (error) {
         console.error('Error adding entry:', error);
-        alert('Failed to add entry. Please try again.');
+        alert('Error al añadir la entrada. Por favor, inténtalo de nuevo.');
     }
 }
 
 // Delete entry
 async function deleteEntry(id) {
-    if (!confirm('Delete this entry?')) return;
+    if (!confirm('¿Eliminar esta entrada?')) return;
 
     try {
         const response = await fetch('/api/hours', {
@@ -114,7 +114,7 @@ async function deleteEntry(id) {
         await fetchEntries();
     } catch (error) {
         console.error('Error deleting entry:', error);
-        alert('Failed to delete entry. Please try again.');
+        alert('Error al eliminar la entrada. Por favor, inténtalo de nuevo.');
     }
 }
 
@@ -154,6 +154,14 @@ function updateWeeklyDays() {
             dayCard.classList.remove('has-hours');
         }
         
+        // Add current-day class if it's today
+        const todayStr = formatDateString(today);
+        if (dateStr === todayStr) {
+            dayCard.classList.add('current-day');
+        } else {
+            dayCard.classList.remove('current-day');
+        }
+        
         // Add click handler to select this date in the form
         dayCard.onclick = () => selectDate(dateStr);
     });
@@ -170,7 +178,7 @@ function renderEntries() {
     const container = document.getElementById('entriesList');
 
     if (entries.length === 0) {
-        container.innerHTML = '<div class="empty-state">No entries yet. Add your first babysitting session above!</div>';
+        container.innerHTML = '<div class="empty-state">Todavía no hay entradas. ¡Añade tu primera sesión de cuidado arriba!</div>';
         return;
     }
 
@@ -178,7 +186,7 @@ function renderEntries() {
         <div class="entry-item">
             <div class="entry-info">
                 <div class="entry-date">${formatDate(entry.date)}</div>
-                <div class="entry-hours">${entry.hours} ${entry.hours === 1 ? 'hour' : 'hours'}</div>
+                <div class="entry-hours">${entry.hours} ${entry.hours === 1 ? 'hora' : 'horas'}</div>
             </div>
             <button class="btn-delete" onclick="deleteEntry(${entry.id})">
                 <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -221,7 +229,7 @@ function getWeeklyHours() {
 // Format date for display
 function formatDate(dateString) {
     const date = parseLocalDate(dateString);
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString('es-ES', {
         weekday: 'short',
         month: 'short',
         day: 'numeric'

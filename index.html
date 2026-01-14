@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Babysitter Hours Tracker</title>
+    <title>Registro de Horas de Niñera</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,15 +15,15 @@
                         <circle cx="12" cy="12" r="10"></circle>
                         <polyline points="12 6 12 12 16 14"></polyline>
                     </svg>
-                    Babysitter Hours Tracker
+                    Registro de Horas de Niñera
                 </h1>
-                <p>Track babysitting hours</p>
+                <p>Seguimiento de horas de cuidado infantil</p>
             </header>
 
             <!-- Summary Card -->
             <div class="summary-grid">
                 <div class="summary-card indigo">
-                    <div class="summary-label">This Week</div>
+                    <div class="summary-label">Esta Semana</div>
                     <div class="summary-value" id="weeklyHours">0h</div>
                 </div>
             </div>
@@ -31,27 +31,27 @@
             <!-- Weekly Days Grid -->
             <div class="weekly-days-grid">
                 <div class="day-card" id="day-mon">
-                    <div class="day-name">Mon</div>
+                    <div class="day-name">Lun</div>
                     <div class="day-date">--</div>
                     <div class="day-hours">0h</div>
                 </div>
                 <div class="day-card" id="day-tue">
-                    <div class="day-name">Tue</div>
+                    <div class="day-name">Mar</div>
                     <div class="day-date">--</div>
                     <div class="day-hours">0h</div>
                 </div>
                 <div class="day-card" id="day-wed">
-                    <div class="day-name">Wed</div>
+                    <div class="day-name">Mié</div>
                     <div class="day-date">--</div>
                     <div class="day-hours">0h</div>
                 </div>
                 <div class="day-card" id="day-thu">
-                    <div class="day-name">Thu</div>
+                    <div class="day-name">Jue</div>
                     <div class="day-date">--</div>
                     <div class="day-hours">0h</div>
                 </div>
                 <div class="day-card" id="day-fri">
-                    <div class="day-name">Fri</div>
+                    <div class="day-name">Vie</div>
                     <div class="day-date">--</div>
                     <div class="day-hours">0h</div>
                 </div>
@@ -61,11 +61,11 @@
             <div class="form-section">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="date">Date</label>
+                        <label for="date">Fecha</label>
                         <input type="date" id="date">
                     </div>
                     <div class="form-group">
-                        <label for="hours">Hours</label>
+                        <label for="hours">Horas</label>
                         <input type="number" id="hours" placeholder="4.5" step="0.5" min="0">
                     </div>
                     <div class="form-group button-group">
@@ -74,7 +74,7 @@
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
-                            Add Entry
+                            Añadir Entrada
                         </button>
                     </div>
                 </div>
@@ -89,10 +89,10 @@
                         <line x1="8" y1="2" x2="8" y2="6"></line>
                         <line x1="3" y1="10" x2="21" y2="10"></line>
                     </svg>
-                    Recent Entries
+                    Entradas Recientes
                 </h2>
                 <div id="entriesList" class="entries-list">
-                    <div class="loading">Loading...</div>
+                    <div class="loading">Cargando...</div>
                 </div>
             </div>
         </div>

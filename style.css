@@ -127,6 +127,23 @@ header p {
     margin-bottom: 0.25rem;
 }
 
+.day-card.current-day {
+    border-color: #4F46E5;
+    border-width: 3px;
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3), 0 2px 4px -1px rgba(79, 70, 229, 0.2);
+}
+
+.day-card.current-day:hover {
+    border-color: #4338CA;
+    box-shadow: 0 6px 8px -1px rgba(79, 70, 229, 0.4), 0 4px 6px -1px rgba(79, 70, 229, 0.3);
+}
+
+/* Si el día actual también tiene horas */
+.day-card.current-day.has-hours {
+    background-color: #EEF2FF;
+    border-color: #4F46E5;
+}
+
 .day-date {
     font-size: 1.75rem;
     font-weight: 700;
